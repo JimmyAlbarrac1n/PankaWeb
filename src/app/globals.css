@@ -1,26 +1,141 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Panka Design System - Dark Olive Green Theme */
+/* Tailwind v4 CSS Variables */
+
+@theme {
+  /* Colors */
+  --color-background: hsl(240 14% 8%);
+  --color-foreground: hsl(40 20% 98%);
+  --color-card: hsl(240 12% 12%);
+  --color-card-foreground: hsl(40 20% 98%);
+  --color-popover: hsl(240 12% 12%);
+  --color-popover-foreground: hsl(40 20% 98%);
+  --color-primary: hsl(142 65% 49%);
+  --color-primary-foreground: hsl(240 14% 8%);
+  --color-secondary: hsl(40 15% 88%);
+  --color-secondary-foreground: hsl(240 14% 8%);
+  --color-muted: hsl(240 8% 25%);
+  --color-muted-foreground: hsl(240 5% 65%);
+  --color-accent: hsl(142 68% 55%);
+  --color-accent-foreground: hsl(240 14% 8%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(40 20% 98%);
+  --color-border: hsl(240 8% 20%);
+  --color-input: hsl(240 8% 20%);
+  --color-ring: hsl(142 65% 49%);
+
+  /* Custom Panka colors */
+  --color-panka-olive: hsl(240 14% 8%);
+  --color-panka-olive-light: hsl(240 12% 15%);
+  --color-panka-cream: hsl(40 20% 96%);
+  --color-panka-beige: hsl(38 25% 89%);
+  --color-panka-green: hsl(142 65% 49%);
+  --color-panka-green-glow: hsl(142 70% 55%);
+
+  /* Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 3rem;
+  --radius-full: 9999px;
+
+  /* Animations */
+  --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 30s linear infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global styles */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+/* Animation utilities - only used ones */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
+/* Accordion animations (Radix UI) */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+.animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+
+.animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
 }
