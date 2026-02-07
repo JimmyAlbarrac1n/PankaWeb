@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { t } from '@/lib/translations';
 import { cn } from '@/lib/utils';
 
@@ -11,31 +12,35 @@ export function Hero() {
     const projects = [
         {
             id: 1,
-            title: t.projects.bloomStudio.title,
-            description: t.projects.bloomStudio.description,
-            gradient: 'from-teal-900/50 via-emerald-800/40 to-green-900/50',
-            href: '#',
+            title: 'Chris Bonilla',
+            description: 'Influencer & Content Creator',
+            image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=525&fit=crop&q=80',
+            href: 'https://chrisbonillaec.com',
+            external: true,
         },
         {
             id: 2,
             title: t.projects.terraFoods.title,
             description: t.projects.terraFoods.description,
-            gradient: 'from-green-900/50 via-teal-800/40 to-emerald-900/50',
+            image: 'https://images.unsplash.com/photo-1555421689-d68471e189f2?w=600&h=525&fit=crop&q=80',
             href: '#',
+            external: false,
         },
         {
             id: 3,
             title: t.projects.verdantLabs.title,
             description: t.projects.verdantLabs.description,
-            gradient: 'from-emerald-900/50 via-cyan-800/40 to-teal-900/50',
+            image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=525&fit=crop&q=80',
             href: '#',
+            external: false,
         },
         {
             id: 4,
             title: t.projects.oasisTravel.title,
             description: t.projects.oasisTravel.description,
-            gradient: 'from-cyan-900/50 via-emerald-800/40 to-green-900/50',
+            image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=525&fit=crop&q=80',
             href: '#',
+            external: false,
         },
     ];
 
@@ -109,28 +114,35 @@ export function Hero() {
                             <a
                                 key={project.id}
                                 href={project.href}
+                                target={project.external ? '_blank' : undefined}
+                                rel={project.external ? 'noopener noreferrer' : undefined}
                                 data-carousel-item
                                 aria-label={`Ver proyecto: ${project.title}`}
                                 className="flex-shrink-0 w-[85%] sm:w-[60%] md:w-[45%] lg:w-[32%] snap-start group"
                             >
                                 <div className="relative aspect-[4/3.5] rounded-2xl overflow-hidden bg-card/80 border border-border/50 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 hover:scale-[1.02]">
-                                    {/* Abstract gradient background */}
-                                    <div
-                                        className={cn(
-                                            'absolute inset-0 bg-gradient-to-br transition-transform duration-500',
-                                            project.gradient,
-                                            'group-hover:scale-105'
-                                        )}
+                                    {/* Project Image */}
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        sizes="(max-width: 640px) 85vw, (max-width: 768px) 60vw, (max-width: 1024px) 45vw, 32vw"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        priority={project.id === 1}
                                     />
 
-                                    {/* Decorative shapes */}
-                                    <div className="absolute inset-0 opacity-30 pointer-events-none" aria-hidden="true">
-                                        <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-foreground/10 blur-2xl" />
-                                        <div className="absolute bottom-1/3 right-1/4 w-24 h-24 rounded-full bg-primary/20 blur-xl" />
-                                    </div>
+                                    {/* External link badge */}
+                                    {project.external && (
+                                        <div className="absolute top-4 right-4 px-2 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold flex items-center gap-1">
+                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                            </svg>
+                                            Ver sitio
+                                        </div>
+                                    )}
 
                                     {/* Project info */}
-                                    <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-background/90 to-transparent">
+                                    <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-background/95 via-background/80 to-transparent">
                                         <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                                             {project.title}
                                         </h2>

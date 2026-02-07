@@ -32,6 +32,7 @@ export function Nav() {
     const navItems = [
         { label: t.nav.work, href: '#work' },
         { label: t.nav.about, href: '#about' },
+        { label: t.nav.services, href: '#services' },
         { label: t.nav.contact, href: '#contact' },
     ];
 

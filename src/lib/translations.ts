@@ -6,6 +6,7 @@ export const translations = {
         nav: {
             work: 'Proyectos',
             about: 'Nosotros',
+            services: 'Planes',
             contact: 'Contacto',
         },
         hero: {
