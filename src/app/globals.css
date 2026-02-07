@@ -16,7 +16,7 @@
   --color-secondary: hsl(40 15% 88%);
   --color-secondary-foreground: hsl(240 14% 8%);
   --color-muted: hsl(240 8% 25%);
-  --color-muted-foreground: hsl(240 5% 65%);
+  --color-muted-foreground: hsl(240 5% 75%);
   --color-accent: hsl(142 68% 55%);
   --color-accent-foreground: hsl(240 14% 8%);
   --color-destructive: hsl(0 84% 60%);
@@ -62,6 +62,16 @@ body {
 
 * {
   border-color: var(--color-border);
+}
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 /* Animation utilities - only used ones */

@@ -1,15 +1,33 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useLanguage } from '@/contexts/language-context';
+import { t } from '@/lib/translations';
+
+// Inline SVG icons
+function MenuIcon({ className }: { className?: string }) {
+    return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+    );
+}
+
+function XIcon({ className }: { className?: string }) {
+    return (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+    );
+}
 
 export function Nav() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const { t, language, toggleLanguage } = useLanguage();
 
     const navItems = [
         { label: t.nav.work, href: '#work' },
@@ -42,6 +60,7 @@ export function Nav() {
                     'fixed top-0 left-0 right-0 z-50 transition-all duration-300 animate-fade-in',
                     isScrolled ? 'bg-background/90 backdrop-blur-md border-b border-border/50' : 'bg-transparent'
                 )}
+                aria-label="Navegación principal"
             >
                 <div className="container mx-auto px-6 py-3">
                     <div className="flex items-center justify-between">
@@ -49,6 +68,7 @@ export function Nav() {
                         <a
                             href="#"
                             className="text-2xl font-bold text-foreground tracking-tight hover:text-primary transition-colors hover:scale-105"
+                            aria-label="Panka - Ir al inicio"
                         >
                             Panka
                         </a>
@@ -60,42 +80,25 @@ export function Nav() {
                                     key={item.href}
                                     href={item.href}
                                     onClick={(e) => handleNavClick(e, item.href)}
-                                    className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-200 hover:scale-105"
+                                    className="px-4 py-3 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-200 hover:scale-105"
                                     style={{ animationDelay: `${index * 100}ms` }}
                                 >
                                     {item.label}
                                 </a>
                             ))}
-
-                            {/* ES/EN Language Toggle */}
-                            <button
-                                onClick={toggleLanguage}
-                                className="ml-4 flex items-center gap-1 px-3 py-1.5 rounded-full border border-border/50 text-sm hover:border-primary/50 transition-all hover:scale-105 active:scale-95"
-                            >
-                                <span className={cn(
-                                    "transition-colors",
-                                    language === 'es' ? 'text-foreground font-medium' : 'text-muted-foreground'
-                                )}>
-                                    ES
-                                </span>
-                                <span className="text-muted-foreground">/</span>
-                                <span className={cn(
-                                    "transition-colors",
-                                    language === 'en' ? 'text-foreground font-medium' : 'text-muted-foreground'
-                                )}>
-                                    EN
-                                </span>
-                            </button>
                         </div>
 
                         {/* Mobile Menu Button */}
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="md:hidden"
+                            className="md:hidden w-12 h-12"
                             onClick={() => setIsOpen(!isOpen)}
+                            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+                            aria-expanded={isOpen}
+                            aria-controls="mobile-menu"
                         >
-                            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                            {isOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
                         </Button>
                     </div>
                 </div>
@@ -103,43 +106,26 @@ export function Nav() {
 
             {/* Mobile Menu Overlay */}
             <div
+                id="mobile-menu"
                 className={cn(
                     "fixed inset-0 z-40 bg-background/95 backdrop-blur-xl transition-all duration-300 md:hidden",
                     isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                 )}
+                aria-hidden={!isOpen}
             >
-                <div className="flex flex-col items-center justify-center h-full gap-6">
+                <nav className="flex flex-col items-center justify-center h-full gap-6" aria-label="Menú móvil">
                     {navItems.map((item) => (
                         <a
                             key={item.href}
                             href={item.href}
                             onClick={(e) => handleNavClick(e, item.href)}
-                            className="text-2xl font-medium text-foreground hover:text-primary transition-colors"
+                            className="text-2xl font-medium text-foreground hover:text-primary transition-colors py-3 px-6"
+                            tabIndex={isOpen ? 0 : -1}
                         >
                             {item.label}
                         </a>
                     ))}
-
-                    {/* Mobile ES/EN Toggle */}
-                    <button
-                        onClick={toggleLanguage}
-                        className="mt-4 px-4 py-3 flex items-center gap-3 text-lg border-t border-border/50 pt-6"
-                    >
-                        <span className={cn(
-                            "transition-colors",
-                            language === 'es' ? 'text-foreground font-medium' : 'text-muted-foreground'
-                        )}>
-                            ES
-                        </span>
-                        <span className="text-muted-foreground">/</span>
-                        <span className={cn(
-                            "transition-colors",
-                            language === 'en' ? 'text-foreground font-medium' : 'text-muted-foreground'
-                        )}>
-                            EN
-                        </span>
-                    </button>
-                </div>
+                </nav>
             </div>
         </>
     );

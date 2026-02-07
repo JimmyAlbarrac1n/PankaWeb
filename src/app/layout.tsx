@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { LanguageProvider } from "@/contexts/language-context";
 import { Nav } from "@/components/nav";
 
 // Optimized font loading with Next.js
@@ -51,7 +50,6 @@ export const metadata: Metadata = {
     canonical: "/",
     languages: {
       "es-ES": "/",
-      "en-US": "/en",
     },
   },
   openGraph: {
@@ -59,7 +57,6 @@ export const metadata: Metadata = {
     description: "Diseño digital para negocios que florecen. Creamos webs rápidas, económicas y personalizadas.",
     type: "website",
     locale: "es_ES",
-    alternateLocale: "en_US",
     siteName: "Panka",
     url: siteUrl,
   },
@@ -86,7 +83,7 @@ const jsonLd = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer service",
-    availableLanguage: ["Spanish", "English"],
+    availableLanguage: ["Spanish"],
   },
 };
 
@@ -105,22 +102,20 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <LanguageProvider>
-          {/* Static gradient background - lightweight alternative to Three.js */}
-          <div
-            className="fixed inset-0 -z-10 pointer-events-none"
-            style={{
-              background: `
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(62, 228, 172, 0.15), transparent),
-                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(5, 150, 105, 0.1), transparent),
-                radial-gradient(ellipse 50% 30% at 20% 80%, rgba(4, 120, 87, 0.1), transparent),
-                linear-gradient(180deg, #0a0a12 0%, #0f0f1a 50%, #0a0a12 100%)
-              `
-            }}
-          />
-          <Nav />
-          {children}
-        </LanguageProvider>
+        {/* Static gradient background */}
+        <div
+          className="fixed inset-0 -z-10 pointer-events-none"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 50% -20%, rgba(62, 228, 172, 0.15), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 60%, rgba(5, 150, 105, 0.1), transparent),
+              radial-gradient(ellipse 50% 30% at 20% 80%, rgba(4, 120, 87, 0.1), transparent),
+              linear-gradient(180deg, #0a0a12 0%, #0f0f1a 50%, #0a0a12 100%)
+            `
+          }}
+        />
+        <Nav />
+        {children}
       </body>
     </html>
   );

@@ -1,8 +1,4 @@
-'use client';
-
-import { useInView } from '@/hooks/use-in-view';
-import { cn } from '@/lib/utils';
-import { useLanguage } from '@/contexts/language-context';
+import { t } from '@/lib/translations';
 
 const clients = [
     { id: 1, name: 'Cliente 1' },
@@ -16,32 +12,16 @@ const clients = [
 ];
 
 export function Clients() {
-    const { ref, isInView } = useInView({ threshold: 0.1 });
-    const { t } = useLanguage();
-
     return (
-        <section
-            ref={ref}
-            className="py-10 md:py-14 overflow-hidden bg-transparent"
-        >
-            <div
-                className={cn(
-                    "container mx-auto px-6 mb-8 max-w-7xl transition-all duration-600",
-                    isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-                )}
-            >
+        <section className="py-10 md:py-14 overflow-hidden bg-transparent">
+            <div className="container mx-auto px-6 mb-8 max-w-7xl animate-fade-in">
                 <h2 className="text-center text-muted-foreground text-sm uppercase tracking-widest font-medium">
                     {t.clients.title}
                 </h2>
             </div>
 
             {/* Marquee Container */}
-            <div
-                className={cn(
-                    "relative mx-auto max-w-7xl overflow-hidden px-6 transition-opacity duration-600 delay-200",
-                    isInView ? "opacity-100" : "opacity-0"
-                )}
-            >
+            <div className="relative mx-auto max-w-7xl overflow-hidden px-6">
                 {/* Gradient Edges */}
                 <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
